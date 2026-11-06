@@ -1,0 +1,136 @@
+{
+  "version": 3,
+  "title": "六年级英语·第三单元（小升初卷）",
+  "questions": [
+    {
+      "q": "选出每组单词中不同类的一项：",
+      "options": [
+        "bus",
+        "bike",
+        "pencil"
+      ],
+      "answer": 2
+    },
+    {
+      "q": "（天津北辰区）—Look! I have a toy bike. —Wow! It's so ______.",
+      "options": [
+        "birthday",
+        "cute",
+        "guess"
+      ],
+      "answer": 1
+    },
+    {
+      "q": "（天津和平区）Can I ______ with it?",
+      "options": [
+        "plays",
+        "playing",
+        "play"
+      ],
+      "answer": 2
+    },
+    {
+      "q": "（天津和平区）—What's this? —______ a doll.",
+      "options": [
+        "It's",
+        "They're",
+        "I'm"
+      ],
+      "answer": 0
+    },
+    {
+      "q": "（天津北辰区）She ______ a jigsaw.",
+      "options": [
+        "have",
+        "has",
+        "are"
+      ],
+      "answer": 1
+    },
+    {
+      "q": "（天津和平区）—Happy birthday! —______.",
+      "options": [
+        "Sorry!",
+        "Sure!",
+        "Thank you!"
+      ],
+      "answer": 2
+    },
+    {
+      "q": "（天津河西区）It's a gift ______ you.",
+      "options": [
+        "of",
+        "for",
+        "in"
+      ],
+      "answer": 1
+    },
+    {
+      "q": "（天津蓟州区）We often share books and ______.",
+      "options": [
+        "pencil",
+        "pen",
+        "toys"
+      ],
+      "answer": 2
+    },
+    {
+      "q": "（天津红桥区）Haoran is ______ good friend. We often share ______ bikes.",
+      "options": [
+        "my; we",
+        "I; my",
+        "my; our"
+      ],
+      "answer": 2
+    },
+    {
+      "q": "（天津南开区·改编）Which of the following is related to sharing?",
+      "options": [
+        "独在异乡为异客，每逢佳节倍思亲。",
+        "两岸猿声啼不住，轻舟已过万重山。",
+        "投我以桃，报之以李。"
+      ],
+      "answer": 2
+    },
+    {
+      "q": "你想问 Jiaming“这是什么？”，你应该这样问：",
+      "options": [
+        "What's this, Jiaming?",
+        "Guess, please."
+      ],
+      "answer": 0
+    },
+    {
+      "q": "别人向你表示感谢，你可以说：",
+      "options": [
+        "Thank you.",
+        "You're welcome."
+      ],
+      "answer": 1
+    },
+    {
+      "q": "今天是爸爸的生日，你想送给他礼物，你应说：",
+      "options": [
+        "Dad, I have a new toy bike.",
+        "Dad, it's a gift for you. Happy birthday!"
+      ],
+      "answer": 1
+    },
+    {
+      "q": "Mary 有一个新的玩具娃娃，你想说它很可爱：",
+      "options": [
+        "It's new.",
+        "It's cute."
+      ],
+      "answer": 1
+    },
+    {
+      "q": "你想和 Peter 一起分享书，你可以说：",
+      "options": [
+        "We can share books.",
+        "We often share our toys."
+      ],
+      "answer": 0
+    }
+  ]
+}

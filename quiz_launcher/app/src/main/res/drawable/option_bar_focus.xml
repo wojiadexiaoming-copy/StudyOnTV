@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 选项左侧色条：选中态用强调色 -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <solid android:color="@color/accent" />
+    <corners android:radius="3dp" />
+</shape>

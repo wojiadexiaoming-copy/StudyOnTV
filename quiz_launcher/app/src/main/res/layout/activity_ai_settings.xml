@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg"
+    android:scrollbars="none">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingLeft="48dp"
+        android:paddingTop="32dp"
+        android:paddingRight="48dp"
+        android:paddingBottom="40dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="AI 解析设置（手机填写）"
+            android:textColor="@color/text_primary"
+            android:textSize="30sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:text="用手机浏览器打开下面的地址，粘贴 Agnes / MiMo Key 并保存。Key 用 Android Keystore 加密后只存本机。"
+            android:textColor="@color/text_secondary"
+            android:textSize="16sp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/panel_bg"
+            android:orientation="vertical"
+            android:padding="22dp">
+
+            <TextView
+                android:id="@+id/ai_url"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif"
+                android:text="正在启动局域网服务…"
+                android:textColor="@color/accent"
+                android:textSize="24sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="手机与电视连同一个 Wi-Fi/热点。网页里需要输入电视上设置的 4 位家长密码；保存与测试都不会回显完整 Key，只显示前后各 4 位。离开本页即停止服务。"
+                android:textColor="@color/text_secondary"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/ai_page_status"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="14dp"
+                android:fontFamily="sans-serif"
+                android:lineSpacingExtra="3dp"
+                android:textColor="@color/text_primary"
+                android:textSize="17sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="22dp"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/ai_clear"
+                android:layout_width="wrap_content"
+                android:layout_height="62dp"
+                android:background="@drawable/button_bg"
+                android:fontFamily="sans-serif"
+                android:minWidth="220dp"
+                android:paddingLeft="26dp"
+                android:paddingRight="26dp"
+                android:text="清除 Key"
+                android:textAllCaps="false"
+                android:textColor="@color/text_primary"
+                android:textSize="20sp" />
+
+            <Button
+                android:id="@+id/ai_close"
+                android:layout_width="wrap_content"
+                android:layout_height="62dp"
+                android:layout_marginStart="20dp"
+                android:background="@drawable/button_bg"
+                android:fontFamily="sans-serif"
+                android:minWidth="180dp"
+                android:paddingLeft="26dp"
+                android:paddingRight="26dp"
+                android:text="关闭"
+                android:textAllCaps="false"
+                android:textColor="@color/text_primary"
+                android:textSize="20sp" />
+        </LinearLayout>
+    </LinearLayout>
+</ScrollView>

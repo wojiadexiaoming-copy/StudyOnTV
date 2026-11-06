@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="bg">#0B1016</color>
+    <color name="card">#151D26</color>
+    <color name="card2">#1A2431</color>
+    <color name="stroke">#26313F</color>
+    <color name="input">#111922</color>
+    <color name="text">#EFF5FA</color>
+    <color name="text2">#96A7B8</color>
+    <color name="hint">#5E7082</color>
+    <color name="accent">#4D9BFF</color>
+    <color name="accentSoft">#17324F</color>
+    <color name="ok">#3DD68C</color>
+    <color name="okSoft">#123D2C</color>
+    <color name="warn">#FFB648</color>
+    <color name="warnSoft">#3B2E12</color>
+    <color name="danger">#F4635B</color>
+    <color name="dangerSoft">#3D1B1B</color>
+    <color name="chip">#1F2A36</color>
+</resources>

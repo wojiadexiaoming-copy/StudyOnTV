@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg"
+    android:scrollbars="none">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingLeft="48dp"
+        android:paddingTop="32dp"
+        android:paddingRight="48dp"
+        android:paddingBottom="40dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="题库管理"
+            android:textColor="@color/text_primary"
+            android:textSize="30sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:text="本页打开期间会在局域网内启动一个极简上传服务，退出本页即关闭。"
+            android:textColor="@color/text_secondary"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/bank_url"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="服务未启动"
+            android:textColor="@color/accent"
+            android:textSize="34sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/server_state"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:textColor="@color/text_secondary"
+            android:textSize="17sp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="22dp"
+            android:background="@drawable/card_bg"
+            android:elevation="4dp"
+            android:orientation="vertical"
+            android:padding="22dp">
+
+            <TextView
+                android:id="@+id/bank_status"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/text_primary"
+                android:textSize="21sp" />
+
+            <LinearLayout
+                android:id="@+id/bank_subject_rows"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:orientation="vertical" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:text="使用步骤：\n1. 手机连同一个 Wi-Fi 或电视开热点后手机接入。\n2. 手机浏览器打开上面的地址。\n3. 输入 4 位家长密码，上传整库（含 subjects 数组）或单学科（只含 1 个学科）JSON。\n4. 校验通过后自动备份旧题库并生效；单学科文件只替换同学科 key，其他学科保留。"
+                android:textColor="@color/text_secondary"
+                android:textSize="16sp" />
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="18dp"
+            android:text="备用导入：把 questions.json 放到 U 盘根目录，或执行\nadb push questions.json /sdcard/Android/data/com.family.quizlauncher/files/questions_import.json\n下次回到桌面会提示导入，处理完自动改名防止重复导入。"
+            android:textColor="@color/text_secondary"
+            android:textSize="15sp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="说明：本页不内置二维码（避免引入第三方库），请直接按上方地址在手机浏览器访问。"
+            android:textColor="@color/text_secondary"
+            android:textSize="14sp" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btn_restart"
+                android:layout_width="wrap_content"
+                android:layout_height="56dp"
+                android:background="@drawable/button_bg"
+                android:minWidth="200dp"
+                android:paddingLeft="28dp"
+                android:paddingRight="28dp"
+                android:text="重启服务"
+                android:textColor="@color/text_primary"
+                android:textSize="18sp" />
+
+            <Button
+                android:id="@+id/btn_rollback"
+                android:layout_width="wrap_content"
+                android:layout_height="56dp"
+                android:layout_marginStart="20dp"
+                android:background="@drawable/button_bg"
+                android:minWidth="200dp"
+                android:paddingLeft="28dp"
+                android:paddingRight="28dp"
+                android:text="回退上一版"
+                android:textAllCaps="false"
+                android:textColor="@color/text_primary"
+                android:textSize="18sp" />
+
+            <Button
+                android:id="@+id/btn_exit"
+                android:layout_width="wrap_content"
+                android:layout_height="56dp"
+                android:layout_marginStart="20dp"
+                android:background="@drawable/button_bg"
+                android:minWidth="180dp"
+                android:paddingLeft="28dp"
+                android:paddingRight="28dp"
+                android:text="返回设置"
+                android:textAllCaps="false"
+                android:textColor="@color/text_primary"
+                android:textSize="18sp" />
+        </LinearLayout>
+    </LinearLayout>
+</ScrollView>

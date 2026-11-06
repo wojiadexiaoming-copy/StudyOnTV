@@ -1,0 +1,26 @@
+# 构建产物 / 签名
+*.apk
+*.aab
+*.keystore
+*.jks
+local.properties
+build/
+.gradle/
+
+# 设备诊断与备份：含包列表、IP、prefs 内容，绝不入库
+诊断/
+备份/
+日志/
+*.log
+
+# 截图（可能含真实 IP / PIN / 房间信息）
+screenshots/
+
+# 自带工具二进制（体积大且可自行下载）
+platform-tools/
+*.exe
+*.dll
+
+# 系统垃圾
+.DS_Store
+Thumbs.db

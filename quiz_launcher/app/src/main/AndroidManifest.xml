@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <uses-sdk android:minSdkVersion="26" android:targetSdkVersion="30" />
+
+    <uses-permission android:name="android.permission.QUERY_ALL_PACKAGES" />
+    <!-- 仅用于手机浏览器访问电视上的题库上传服务，不发任何外部请求 -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <!-- Android 8/9 读取 U 盘目录；应用专属外部目录不需要权限 -->
+    <uses-permission
+        android:name="android.permission.READ_EXTERNAL_STORAGE"
+        android:maxSdkVersion="32" />
+    <uses-permission
+        android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+        android:maxSdkVersion="28" />
+    <!-- v2.1：开机清空放行记录（第二道保险；主逻辑在 Prefs 里） -->
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <!-- v2.8：手机端随时控制电视，需要常驻前台服务 -->
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+
+    <uses-feature android:name="android.hardware.touchscreen" android:required="false" />
+    <uses-feature android:name="android.software.leanback" android:required="false" />
+
+    <application
+        android:allowBackup="false"
+        android:banner="@drawable/ic_launcher"
+        android:debuggable="true"
+        android:icon="@drawable/ic_launcher"
+        android:label="@string/app_name"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+
+        <!--
+            注意：本机 Philips 58PUF7695_T3（Android 8.0 定制 ROM）的
+            PackageManagerService.chooseBestActivity 在存在第 4 个 HOME 候选时会抛
+            IndexOutOfBoundsException，导致 system_server 在开机解析桌面时崩溃、黑屏。
+            因此 v1.2 起移除 CATEGORY_HOME；v2 继续遵守：本应用绝不注册 HOME / DEFAULT，
+            只作为普通应用 + 无障碍服务运行。
+        -->
+        <activity
+            android:name=".ParentActivity"
+            android:configChanges="keyboard|keyboardHidden|navigation|orientation|screenSize|screenLayout|uiMode|smallestScreenSize|density"
+            android:excludeFromRecents="true"
+            android:exported="true"
+            android:launchMode="singleTop"
+            android:screenOrientation="landscape">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <!-- 旧版应用网格，仅保留内部实现，不再作为入口。 -->
+        <activity
+            android:name=".HomeActivity"
+            android:configChanges="keyboard|keyboardHidden|navigation|orientation|screenSize|screenLayout|uiMode|smallestScreenSize|density"
+            android:excludeFromRecents="true"
+            android:exported="false"
+            android:launchMode="singleTask"
+            android:screenOrientation="landscape" />
+
+        <activity
+            android:name=".QuizActivity"
+            android:configChanges="keyboard|keyboardHidden|navigation|orientation|screenSize|screenLayout|uiMode|smallestScreenSize|density"
+            android:excludeFromRecents="true"
+            android:exported="false"
+            android:launchMode="singleTop"
+            android:screenOrientation="landscape" />
+
+        <activity
+            android:name=".QuestionBankActivity"
+            android:configChanges="keyboard|keyboardHidden|navigation|orientation|screenSize|screenLayout|uiMode|smallestScreenSize|density"
+            android:excludeFromRecents="true"
+            android:exported="false"
+            android:screenOrientation="landscape" />
+
+        <!-- v2.5：电视端「AI 解析设置」页，可见期间在本机局域网提供 /ai 手机填 Key 页面 -->
+        <activity
+            android:name=".AiSettingsActivity"
+            android:configChanges="keyboard|keyboardHidden|navigation|orientation|screenSize|screenLayout|uiMode|smallestScreenSize|density"
+            android:excludeFromRecents="true"
+            android:exported="false"
+            android:launchMode="singleTop"
+            android:screenOrientation="landscape" />
+
+        <activity
+            android:name=".RecordsActivity"
+            android:configChanges="keyboard|keyboardHidden|navigation|orientation|screenSize|screenLayout|uiMode|smallestScreenSize|density"
+            android:excludeFromRecents="true"
+            android:exported="false"
+            android:screenOrientation="landscape" />
+
+        <!-- v2.9：题库统计页（掌握 / 移出 / 恢复 / 重置） -->
+        <activity
+            android:name=".StatsActivity"
+            android:configChanges="keyboard|keyboardHidden|navigation|orientation|screenSize|screenLayout|uiMode|smallestScreenSize|density"
+            android:excludeFromRecents="true"
+            android:exported="false"
+            android:launchMode="singleTop"
+            android:screenOrientation="landscape" />
+
+        <!-- v2 拦截服务：只监听窗口状态变化，不读取屏幕内容。 -->
+        <service
+            android:name=".QuizAccessibilityService"
+            android:exported="true"
+            android:label="@string/accessibility_service_label"
+            android:permission="android.permission.BIND_ACCESSIBILITY_SERVICE">
+            <intent-filter>
+                <action android:name="android.accessibilityservice.AccessibilityService" />
+            </intent-filter>
+            <meta-data
+                android:name="android.accessibilityservice"
+                android:resource="@xml/accessibility_service_config" />
+        </service>
+
+        <!-- v2.8：常驻前台服务，局域网 /api/* 由它的 ServerSocket 提供 -->
+        <service
+            android:name=".ControlService"
+            android:exported="false"
+            android:foregroundServiceType="dataSync" />
+
+        <!-- 开机清空放行记录；只是第二道保险，主逻辑见 Prefs.isPassActive -->
+        <receiver
+            android:name=".BootCleanupReceiver"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
+    </application>
+
+</manifest>

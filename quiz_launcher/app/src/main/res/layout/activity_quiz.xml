@@ -1,0 +1,277 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    v2.9 答题 Activity（无障碍遮罩不可用时的降级页，也用于「练习答题」）。
+    与遮罩共用一套视觉：深色底 + 卡片 + 圆角 + 描边 + 强调色焦点。
+-->
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/overlay_bg">
+
+    <LinearLayout
+        android:id="@+id/quiz_body"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:paddingLeft="96dp"
+        android:paddingTop="44dp"
+        android:paddingRight="96dp"
+        android:paddingBottom="44dp">
+
+        <!-- 顶栏：标题 / 题号进度 / 状态 -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingStart="68dp">
+
+            <TextView
+                android:id="@+id/quiz_header"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:ellipsize="none"
+                android:fontFamily="sans-serif"
+                android:maxLines="1"
+                android:textColor="@color/accent"
+                android:textSize="21sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/quiz_progress"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif"
+                android:textColor="@color/text_primary"
+                android:textSize="25sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/quiz_meta"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:fontFamily="sans-serif"
+                android:gravity="end"
+                android:textColor="@color/text_secondary"
+                android:textSize="16sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="6dp"
+            android:layout_marginTop="12dp"
+            android:background="@drawable/progress_track"
+            android:orientation="horizontal">
+
+            <View
+                android:id="@+id/quiz_progress_fill"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/progress_fill" />
+
+            <View
+                android:id="@+id/quiz_progress_rest"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="99" />
+        </LinearLayout>
+
+        <!-- 题干卡片 -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/card_bg"
+            android:elevation="6dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingLeft="26dp"
+            android:paddingTop="20dp"
+            android:paddingRight="20dp"
+            android:paddingBottom="20dp">
+
+            <ScrollView
+                android:id="@+id/quiz_question_scroll"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:focusable="true"
+                android:scrollbars="vertical">
+
+                <TextView
+                    android:id="@+id/quiz_question"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif"
+                    android:lineSpacingExtra="5dp"
+                    android:textColor="@color/text_primary"
+                    android:textSize="34sp"
+                    android:textStyle="bold" />
+            </ScrollView>
+        </LinearLayout>
+
+        <!-- 选项滚动区 -->
+        <ScrollView
+            android:id="@+id/quiz_options_scroll"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="16dp"
+            android:layout_weight="1"
+            android:clipToPadding="false"
+                android:fillViewport="true"
+            android:focusable="false"
+            android:scrollbars="vertical">
+
+            <LinearLayout
+                android:id="@+id/quiz_options"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="vertical"
+                android:paddingBottom="8dp" />
+        </ScrollView>
+
+        <TextView
+            android:id="@+id/quiz_feedback"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="10dp"
+            android:fontFamily="sans-serif"
+            android:paddingLeft="22dp"
+            android:paddingTop="8dp"
+            android:paddingRight="22dp"
+            android:paddingBottom="8dp"
+            android:textColor="@color/ok"
+            android:textSize="19sp"
+            android:visibility="gone" />
+    </LinearLayout>
+
+    <!-- 结果 / 复盘 -->
+    <LinearLayout
+        android:id="@+id/quiz_result"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/overlay_bg"
+        android:orientation="vertical"
+        android:paddingLeft="96dp"
+        android:paddingTop="44dp"
+        android:paddingRight="96dp"
+        android:paddingBottom="44dp"
+        android:visibility="gone">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:fillViewport="true"
+            android:focusable="false"
+            android:scrollbars="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal|center_vertical"
+                android:orientation="vertical"
+                android:paddingTop="8dp">
+
+                <TextView
+                    android:id="@+id/result_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif"
+                    android:gravity="center"
+                    android:textColor="@color/text_primary"
+                    android:textSize="36sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/result_detail"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="14dp"
+                    android:fontFamily="sans-serif"
+                    android:gravity="center"
+                    android:lineSpacingExtra="4dp"
+                    android:textColor="@color/text_secondary"
+                    android:textSize="21sp" />
+
+                <TextView
+                    android:id="@+id/result_review"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="18dp"
+                    android:background="@drawable/card_bg"
+                    android:fontFamily="sans-serif"
+                    android:gravity="start"
+                    android:lineSpacingExtra="6dp"
+                    android:paddingLeft="20dp"
+                    android:paddingTop="16dp"
+                    android:paddingRight="20dp"
+                    android:paddingBottom="16dp"
+                    android:textColor="@color/text_secondary"
+                    android:textSize="19sp" />
+            </LinearLayout>
+        </ScrollView>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btn_primary"
+                android:layout_width="wrap_content"
+                android:layout_height="52dp"
+                android:background="@drawable/pill_bg"
+                android:fontFamily="sans-serif"
+                android:minHeight="0dp"
+                android:minWidth="220dp"
+                android:paddingLeft="26dp"
+                android:paddingRight="26dp"
+                android:textColor="@color/text_primary"
+                android:textSize="19sp" />
+
+            <Button
+                android:id="@+id/btn_secondary"
+                android:layout_width="wrap_content"
+                android:layout_height="52dp"
+                android:layout_marginStart="16dp"
+                android:background="@drawable/pill_bg"
+                android:fontFamily="sans-serif"
+                android:minHeight="0dp"
+                android:minWidth="200dp"
+                android:paddingLeft="26dp"
+                android:paddingRight="26dp"
+                android:textColor="@color/text_secondary"
+                android:textSize="19sp" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <!-- 左上角返回角标 -->
+    <Button
+        android:id="@+id/quiz_exit"
+        android:layout_width="52dp"
+        android:layout_height="52dp"
+        android:layout_gravity="top|start"
+        android:layout_marginLeft="96dp"
+        android:layout_marginTop="44dp"
+        android:background="@drawable/badge_bg"
+        android:contentDescription="返回"
+        android:fontFamily="sans-serif"
+        android:gravity="center"
+        android:minHeight="0dp"
+        android:minWidth="0dp"
+        android:paddingLeft="0dp"
+        android:paddingRight="0dp"
+        android:text="‹"
+        android:textAllCaps="false"
+        android:textColor="@color/text_primary"
+        android:textSize="30sp"
+        android:textStyle="bold" />
+</FrameLayout>

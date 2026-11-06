@@ -1,0 +1,574 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg"
+    android:scrollbars="none">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingLeft="48dp"
+        android:paddingTop="32dp"
+        android:paddingRight="48dp"
+        android:paddingBottom="40dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="家长设置"
+            android:textColor="@color/text_primary"
+            android:textSize="30sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:text="修改立即生效。受限应用需要答题通过后才能打开。"
+            android:textColor="@color/text_secondary"
+            android:textSize="16sp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/panel_bg"
+            android:orientation="vertical"
+            android:padding="22dp">
+
+            <TextView
+                android:id="@+id/service_state"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="无障碍服务：检查中…"
+                android:textColor="@color/text_primary"
+                android:textSize="22sp" />
+
+            <TextView
+                android:id="@+id/service_hint"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:textColor="@color/text_secondary"
+                android:textSize="15sp" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="14dp"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/btn_accessibility"
+                    android:layout_width="wrap_content"
+                    android:layout_height="56dp"
+                    android:background="@drawable/button_bg"
+                    android:minWidth="300dp"
+                    android:paddingLeft="26dp"
+                    android:paddingRight="26dp"
+                    android:text="开启无障碍（查看方法）"
+                    android:textColor="@color/text_primary"
+                    android:textSize="18sp" />
+
+                <Button
+                    android:id="@+id/btn_test"
+                    android:layout_width="wrap_content"
+                    android:layout_height="56dp"
+                    android:layout_marginStart="18dp"
+                    android:background="@drawable/button_bg"
+                    android:minWidth="170dp"
+                    android:paddingLeft="26dp"
+                    android:paddingRight="26dp"
+                    android:text="测试答题"
+                    android:textColor="@color/text_primary"
+                    android:textSize="18sp" />
+
+                <Button
+                    android:id="@+id/btn_records"
+                    android:layout_width="wrap_content"
+                    android:layout_height="56dp"
+                    android:layout_marginStart="18dp"
+                    android:background="@drawable/button_bg"
+                    android:minWidth="170dp"
+                    android:paddingLeft="26dp"
+                    android:paddingRight="26dp"
+                    android:text="答题记录"
+                    android:textColor="@color/text_primary"
+                    android:textSize="18sp" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/panel_bg"
+            android:orientation="vertical"
+            android:padding="22dp">
+
+            <TextView
+                android:id="@+id/control_state"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="局域网控制服务：检查中…"
+                android:textColor="@color/text_primary"
+                android:textSize="22sp" />
+
+            <TextView
+                android:id="@+id/control_hint"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:textColor="@color/text_secondary"
+                android:textSize="15sp" />
+
+            <Button
+                android:id="@+id/btn_control"
+                android:layout_width="wrap_content"
+                android:layout_height="56dp"
+                android:layout_marginTop="14dp"
+                android:background="@drawable/button_bg"
+                android:minWidth="300dp"
+                android:paddingLeft="26dp"
+                android:paddingRight="26dp"
+                android:text="开启局域网控制服务"
+                android:textColor="@color/text_primary"
+                android:textSize="18sp" />
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="22dp"
+            android:background="@drawable/panel_bg"
+            android:orientation="vertical"
+            android:padding="22dp">
+
+            <TextView
+                android:id="@+id/minutes_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="放行时长：30 分钟"
+                android:textColor="@color/text_primary"
+                android:textSize="22sp" />
+
+            <SeekBar
+                android:id="@+id/minutes_bar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:focusable="true"
+                android:max="24"
+                android:progressTint="@color/accent"
+                android:thumbTint="@color/accent" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/panel_bg"
+            android:orientation="vertical"
+            android:padding="22dp">
+
+            <TextView
+                android:id="@+id/required_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="及格线：答对 4 题（共 5 题）"
+                android:textColor="@color/text_primary"
+                android:textSize="22sp" />
+
+            <SeekBar
+                android:id="@+id/required_bar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:focusable="true"
+                android:max="4"
+                android:progressTint="@color/accent"
+                android:thumbTint="@color/accent" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/card_bg"
+            android:elevation="4dp"
+            android:orientation="vertical"
+            android:padding="22dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="答题与掌握"
+                android:textColor="@color/text_primary"
+                android:textSize="22sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/threshold_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="掌握阈值：答对 3 次算掌握（1~10）"
+                android:textColor="@color/text_primary"
+                android:textSize="18sp" />
+
+            <SeekBar
+                android:id="@+id/threshold_bar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:focusable="true"
+                android:max="9"
+                android:progressTint="@color/accent"
+                android:thumbTint="@color/accent" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/auto_remove_label"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="掌握后自动移出题库：关闭"
+                    android:textColor="@color/text_primary"
+                    android:textSize="18sp" />
+
+                <Button
+                    android:id="@+id/btn_auto_remove"
+                    android:layout_width="wrap_content"
+                    android:layout_height="52dp"
+                    android:background="@drawable/button_bg"
+                    android:minHeight="0dp"
+                    android:minWidth="200dp"
+                    android:paddingLeft="24dp"
+                    android:paddingRight="24dp"
+                    android:text="开启自动移出"
+                    android:textAllCaps="false"
+                    android:textColor="@color/text_primary"
+                    android:textSize="18sp" />
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="14dp"
+                android:text="启用的学科（点击切换）。一个都不选时视为全部启用。"
+                android:textColor="@color/text_secondary"
+                android:textSize="15sp" />
+
+            <LinearLayout
+                android:id="@+id/subjects_list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:orientation="vertical" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/btn_stats"
+                    android:layout_width="wrap_content"
+                    android:layout_height="54dp"
+                    android:background="@drawable/button_bg"
+                    android:minWidth="280dp"
+                    android:paddingLeft="26dp"
+                    android:paddingRight="26dp"
+                    android:text="题库统计（掌握 / 移出）"
+                    android:textAllCaps="false"
+                    android:textColor="@color/text_primary"
+                    android:textSize="18sp" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/panel_bg"
+            android:orientation="vertical"
+            android:padding="22dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="AI 思路提示与语音朗读（可选）"
+                android:textColor="@color/text_primary"
+                android:textSize="22sp" />
+
+            <TextView
+                android:id="@+id/ai_status"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:textColor="@color/accent"
+                android:textSize="16sp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:text="自用版已内置默认 Key（Agnes / MiMo），装好即可在线提示；也可用手机网页或本机修改，填写的 Key 优先，清除后回落到内置默认。"
+                android:textColor="@color/text_secondary"
+                android:textSize="14sp" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/btn_llm_key"
+                    android:layout_width="wrap_content"
+                    android:layout_height="54dp"
+                    android:background="@drawable/button_bg"
+                    android:minWidth="220dp"
+                    android:paddingLeft="24dp"
+                    android:paddingRight="24dp"
+                    android:text="填写 Agnes Key"
+                    android:textColor="@color/text_primary"
+                    android:textSize="18sp" />
+
+                <Button
+                    android:id="@+id/btn_tts_key"
+                    android:layout_width="wrap_content"
+                    android:layout_height="54dp"
+                    android:layout_marginStart="16dp"
+                    android:background="@drawable/button_bg"
+                    android:minWidth="210dp"
+                    android:paddingLeft="24dp"
+                    android:paddingRight="24dp"
+                    android:text="填写 MiMo Key"
+                    android:textColor="@color/text_primary"
+                    android:textSize="18sp" />
+
+                <Button
+                    android:id="@+id/btn_keys_clear"
+                    android:layout_width="wrap_content"
+                    android:layout_height="54dp"
+                    android:layout_marginStart="16dp"
+                    android:background="@drawable/button_bg"
+                    android:minWidth="150dp"
+                    android:paddingLeft="24dp"
+                    android:paddingRight="24dp"
+                    android:text="清除 Key"
+                    android:textColor="@color/text_primary"
+                    android:textSize="18sp" />
+
+                <Button
+                    android:id="@+id/btn_ai_page"
+                    android:layout_width="wrap_content"
+                    android:layout_height="54dp"
+                    android:layout_marginStart="16dp"
+                    android:background="@drawable/button_bg"
+                    android:minWidth="230dp"
+                    android:paddingLeft="24dp"
+                    android:paddingRight="24dp"
+                    android:text="AI 解析设置（手机填写）"
+                    android:textAllCaps="false"
+                    android:textColor="@color/text_primary"
+                    android:textSize="18sp" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/panel_bg"
+            android:orientation="vertical"
+            android:padding="22dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="受限应用（点击切换）"
+                android:textColor="@color/text_primary"
+                android:textSize="22sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="红色 = 需要答题；绿色 = 直接打开"
+                android:textColor="@color/text_secondary"
+                android:textSize="15sp" />
+
+            <LinearLayout
+                android:id="@+id/apps_list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:orientation="vertical" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/panel_bg"
+            android:orientation="vertical"
+            android:padding="22dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="严格模式（只放行白名单）"
+                android:textColor="@color/text_primary"
+                android:textSize="22sp" />
+
+            <TextView
+                android:id="@+id/strict_state"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:text="严格模式：关闭"
+                android:textColor="@color/text_primary"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/strict_hint"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:textColor="@color/text_secondary"
+                android:textSize="15sp" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/btn_strict"
+                    android:layout_width="wrap_content"
+                    android:layout_height="54dp"
+                    android:background="@drawable/button_bg"
+                    android:minWidth="240dp"
+                    android:paddingLeft="24dp"
+                    android:paddingRight="24dp"
+                    android:text="开启严格模式"
+                    android:textAllCaps="false"
+                    android:textColor="@color/text_primary"
+                    android:textSize="18sp" />
+
+                <Button
+                    android:id="@+id/btn_allow_edit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="54dp"
+                    android:layout_marginStart="16dp"
+                    android:background="@drawable/button_bg"
+                    android:minWidth="220dp"
+                    android:paddingLeft="24dp"
+                    android:paddingRight="24dp"
+                    android:text="编辑白名单"
+                    android:textAllCaps="false"
+                    android:textColor="@color/text_primary"
+                    android:textSize="18sp" />
+
+                <Button
+                    android:id="@+id/btn_allow_default"
+                    android:layout_width="wrap_content"
+                    android:layout_height="54dp"
+                    android:layout_marginStart="16dp"
+                    android:background="@drawable/button_bg"
+                    android:minWidth="240dp"
+                    android:paddingLeft="24dp"
+                    android:paddingRight="24dp"
+                    android:text="恢复默认白名单"
+                    android:textAllCaps="false"
+                    android:textColor="@color/text_primary"
+                    android:textSize="18sp" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btn_bank"
+                android:layout_width="wrap_content"
+                android:layout_height="56dp"
+                android:background="@drawable/button_bg"
+                android:minWidth="260dp"
+                android:paddingLeft="28dp"
+                android:paddingRight="28dp"
+                android:text="题库管理（局域网更新）"
+                android:textColor="@color/text_primary"
+                android:textSize="18sp" />
+
+            <Button
+                android:id="@+id/btn_pin"
+                android:layout_width="wrap_content"
+                android:layout_height="56dp"
+                android:layout_marginStart="20dp"
+                android:background="@drawable/button_bg"
+                android:minWidth="200dp"
+                android:paddingLeft="28dp"
+                android:paddingRight="28dp"
+                android:text="修改家长密码"
+                android:textColor="@color/text_primary"
+                android:textSize="18sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btn_default"
+                android:layout_width="wrap_content"
+                android:layout_height="56dp"
+                android:background="@drawable/button_bg"
+                android:minWidth="220dp"
+                android:paddingLeft="28dp"
+                android:paddingRight="28dp"
+                android:text="恢复默认受限列表"
+                android:textColor="@color/text_primary"
+                android:textSize="18sp" />
+
+            <Button
+                android:id="@+id/btn_exit"
+                android:layout_width="wrap_content"
+                android:layout_height="56dp"
+                android:layout_marginStart="20dp"
+                android:background="@drawable/button_bg"
+                android:minWidth="160dp"
+                android:paddingLeft="28dp"
+                android:paddingRight="28dp"
+                android:text="退出设置"
+                android:textColor="@color/text_primary"
+                android:textSize="18sp" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/bank_info"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="22dp"
+            android:textColor="@color/text_secondary"
+            android:textSize="14sp" />
+    </LinearLayout>
+</ScrollView>

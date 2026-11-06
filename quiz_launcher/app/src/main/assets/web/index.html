@@ -1,0 +1,164 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="theme-color" content="#0a0f15">
+<title>电视家长控制台</title>
+<style>:root{--bg:#0a0f15;--card:#141c25;--line:#25313f;--txt:#eef4fa;--dim:#93a4b6;--accent:#4da3ff;--bad:#ff6b7a}*{box-sizing:border-box}html,body{margin:0;background:var(--bg);color:var(--txt);font-family:-apple-system,BlinkMacSystemFont,"PingFang SC",Arial,sans-serif}body{min-height:100vh}.hidden{display:none!important}.login{min-height:100vh;display:flex;align-items:center;justify-content:center}</style>
+</head>
+<body>
+<div id="login" class="login">
+<div class="login-card">
+<div class="logo">TV</div>
+<h1>家长控制台</h1>
+<p class="sub">输入电视上设置的 4 位家长密码</p>
+<input id="pin" class="pin" type="text" inputmode="numeric" pattern="[0-9]*"
+           maxlength="4" autocomplete="one-time-code" placeholder="••••">
+<button id="login-btn" class="primary block">登录</button>
+<div id="login-msg" class="msg"></div>
+</div>
+<p class="foot">仅限同一个 Wi-Fi 内访问 · <span id="host"></span></p>
+</div>
+<div id="app" class="hidden">
+<div class="wrap">
+<header class="topbar">
+<div class="brand"><span class="dot"></span><span>家长控制台</span></div>
+<div class="top-actions">
+<span id="sync" class="sync">已连接</span>
+<button id="logout" class="icon-btn">退出</button>
+</div>
+</header>
+<section id="panel-overview" class="panel">
+<div class="card hero">
+<div class="hero-row">
+<div>
+<div class="hero-label">电视端版本</div>
+<div class="hero-ver" id="ov-version">—</div>
+</div>
+<div class="online"><span class="dot"></span>在线</div>
+</div>
+<div class="hero-meta">
+<span id="ov-port">服务端口 —</span>
+<span id="ov-source">题库来源 —</span>
+</div>
+</div>
+<div class="grid2">
+<div class="card mini">
+<div class="mini-label">题库</div>
+<div class="mini-value" id="ov-bank">—</div>
+</div>
+<div class="card mini">
+<div class="mini-label">掌握阈值</div>
+<div class="mini-value" id="ov-threshold">—</div>
+</div>
+</div>
+<div class="card">
+<div class="row"><span class="row-label">自动移出</span><span class="pill" id="ov-auto">—</span></div>
+<div class="row"><span class="row-label">严格模式</span><span class="pill" id="ov-strict">—</span></div>
+<div class="row"><span class="row-label">放行时长</span><span class="row-value" id="ov-minutes">—</span></div>
+<div class="row"><span class="row-label">及格线</span><span class="row-value" id="ov-passline">—</span></div>
+</div>
+<div class="card">
+<div class="card-title">放行中的应用</div>
+<div id="ov-passes"></div>
+</div>
+</section>
+<section id="panel-bank" class="panel hidden">
+<div class="card">
+<div class="card-title">学科</div>
+<div id="bank-subjects"></div>
+</div>
+<div class="card">
+<div class="card-title">导入题库</div>
+<div class="hint">支持 v3 多学科格式；单学科上传会替换同 key 的学科，不会影响其他学科。</div>
+<input type="file" id="import-file" accept=".json,application/json">
+<div class="file-name" id="file-name"></div>
+<textarea id="import-text" placeholder='在此粘贴 JSON，例如 {"version":3,"subjects":[...]}'></textarea>
+<div class="actions">
+<button id="btn-import" class="primary">导入题库</button>
+<button id="btn-rollback" class="ghost">回退上一版</button>
+</div>
+<div class="actions">
+<button id="btn-copy-tpl" class="ghost sm">复制模板</button>
+<button id="btn-prompt" class="ghost sm">AI 生成提示词</button>
+</div>
+<div id="import-result" class="hint"></div>
+</div>
+<div id="prompt-card" class="card hidden">
+<div class="card-title">AI 生成提示词</div>
+<div class="hint">把下面这段完整发给任意大模型，让它输出符合格式的 JSON：</div>
+<div id="prompt-text" style="background:#111925;border:1px solid var(--line);border-radius:12px;padding:13px;font-size:12px;line-height:1.7;white-space:pre-wrap;max-height:320px;overflow:auto"></div>
+<div class="actions">
+<button id="btn-copy-prompt" class="ghost sm">复制提示词</button>
+</div>
+</div>
+</section>
+<section id="panel-stats" class="panel hidden">
+<div class="card">
+<div class="row"><span class="row-label">掌握阈值</span><span class="row-value" id="th-val">—</span></div>
+<input type="range" id="th-range" min="1" max="10" step="1" value="3">
+<div class="hint">答对达到该次数即视为掌握；开启自动移出后，掌握时自动从练习中移除。</div>
+<div class="row"><span class="row-label">自动移出</span><input type="checkbox" class="switch" id="auto-toggle"></div>
+</div>
+<div class="card">
+<div class="card-title">学科汇总</div>
+<div id="stat-subjects"></div>
+</div>
+<div class="card">
+<div class="card-title">逐题统计</div>
+<div id="stat-questions"></div>
+<button id="btn-reset" class="danger">重置统计</button>
+</div>
+</section>
+<section id="panel-control" class="panel hidden">
+<div class="card">
+<div class="row"><span class="row-label">放行时长</span><span class="row-value" id="min-val">—</span></div>
+<input type="range" id="min-range" min="1" max="120" step="1" value="30">
+<div class="row"><span class="row-label">及格线</span><span class="row-value" id="line-val">—</span></div>
+<input type="range" id="line-range" min="1" max="5" step="1" value="4">
+</div>
+<div class="card">
+<div class="card-title">受限应用</div>
+<div id="ctrl-apps"></div>
+</div>
+<div class="card">
+<div class="card-title">严格模式</div>
+<div class="row"><span class="row-label">只放行白名单</span><input type="checkbox" class="switch" id="strict-toggle"></div>
+<div id="strict-warn" class="warnbox hidden">严格模式下，除白名单以外的所有应用打开时都要先答题。请确保白名单包含桌面、设置和输入法，否则可能无法退出本控制台。</div>
+<div class="card-title" style="margin-top:18px">白名单（硬白名单只读）</div>
+<div id="allow-chips"></div>
+<div class="row" style="padding-bottom:12px">
+<input type="text" id="allow-input" placeholder="输入包名后点添加，如 com.example.app">
+<button id="allow-add" class="ghost sm">添加</button>
+</div>
+<button id="allow-save" class="primary block">保存白名单</button>
+</div>
+</section>
+</div>
+<nav class="tabbar">
+<div class="tabbar-inner">
+<button class="tab active" id="tab-overview">
+<svg viewBox="0 0 24 24"><path d="M4 10.6 12 4l8 6.6V20h-5v-5H9v5H4z"/></svg>
+        概览
+</button>
+<button class="tab" id="tab-bank">
+<svg viewBox="0 0 24 24"><path d="M5 4h11a3 3 0 0 1 3 3v13H8a3 3 0 0 1-3-3z"/><path d="M5 17a3 3 0 0 1 3-3h11"/></svg>
+        题库
+</button>
+<button class="tab" id="tab-stats">
+<svg viewBox="0 0 24 24"><path d="M5 20V10M12 20V4M19 20v-7"/></svg>
+        统计
+</button>
+<button class="tab" id="tab-control">
+<svg viewBox="0 0 24 24"><path d="M4 7h10M18 7h2M4 17h4M12 17h8"/><circle cx="16" cy="7" r="2"/><circle cx="10" cy="17" r="2"/></svg>
+        控制
+</button>
+</div>
+</nav>
+</div>
+<div id="toast" class="toast"></div>
+<script>(function(){var m=document.getElementById("login-msg");function p(t){if(m)m.textContent=t}function g(u){return fetch(u,{cache:"no-store"}).then(function(r){if(!r.ok)throw new Error("HTTP "+r.status);return r.text()})}function g2(u,n){return g(u).catch(function(e){if(n>=2)throw e;p("重试中 "+(n+1)+"/2…");return new Promise(function(res){setTimeout(function(){res(g2(u,n+1))},1000)})})}function css(t){var s=document.createElement("style");s.textContent=t;document.head.appendChild(s)}function js(t){var s=document.createElement("script");s.textContent=t;document.body.appendChild(s)}p("加载中…");var A=g2("/app.css",0).then(css),B=g2("/app.js",0).then(js);Promise.all([A,B]).then(function(){p("")}).catch(function(){p("页面资源加载失败，请下拉刷新后重试")});})();</script>
+</body>
+</html>

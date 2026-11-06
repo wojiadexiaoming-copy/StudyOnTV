@@ -1,0 +1,524 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    v2.9 答题遮罩（深色底 + 卡片分区 + 圆角 + 描边）。
+
+    安全区按 1920×1080 / 320dpi 计算：左右 96dp、上 44dp、下 52dp，
+    真机约 5% overscan 也不会裁到内容，文字不贴边。
+
+    结构：
+    - 顶部：左侧返回角标（FrameLayout 覆盖，不占正文高度）+ 应用名 / 进度 / 放行信息
+    - 细进度条「第 3 / 5 题」
+    - 题干卡片（右侧「提示」胶囊，视觉降权）
+    - 选项卡片区（占满剩余高度，可滚动）
+    - 反馈条（答对绿 / 答错红）
+-->
+<com.family.quizlauncher.OverlayRootView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/overlay_root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/overlay_bg"
+    android:descendantFocusability="afterDescendants">
+
+    <FrameLayout
+        android:id="@+id/overlay_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingLeft="96dp"
+        android:paddingTop="44dp"
+        android:paddingRight="96dp"
+        android:paddingBottom="52dp">
+
+        <!-- 答题主体 -->
+        <LinearLayout
+            android:id="@+id/overlay_body"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <!-- 顶栏：应用名 / 题号进度 / 放行信息。左侧留 68dp 给返回角标 -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingStart="68dp">
+
+                <TextView
+                    android:id="@+id/overlay_app"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:ellipsize="none"
+                    android:fontFamily="sans-serif"
+                    android:maxLines="1"
+                    android:textColor="@color/accent"
+                    android:textSize="21sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/overlay_progress"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif"
+                    android:textColor="@color/text_primary"
+                    android:textSize="26sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/overlay_meta"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:fontFamily="sans-serif"
+                    android:gravity="end"
+                    android:textColor="@color/text_secondary"
+                    android:textSize="16sp" />
+            </LinearLayout>
+
+            <!-- 细进度条（代码按已答题数设置两段权重） -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="6dp"
+                android:layout_marginTop="12dp"
+                android:background="@drawable/progress_track"
+                android:orientation="horizontal">
+
+                <View
+                    android:id="@+id/overlay_progress_fill"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/progress_fill" />
+
+                <View
+                    android:id="@+id/overlay_progress_rest"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="99" />
+            </LinearLayout>
+
+            <!-- 题干卡片：题干可滚动，右侧「提示」固定不被挤压 -->
+            <LinearLayout
+                android:id="@+id/overlay_question_card"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/card_bg"
+                android:elevation="6dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingLeft="26dp"
+                android:paddingTop="20dp"
+                android:paddingRight="20dp"
+                android:paddingBottom="20dp">
+
+                <ScrollView
+                    android:id="@+id/overlay_question_scroll"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:focusable="true"
+                    android:scrollbars="vertical">
+
+                    <TextView
+                        android:id="@+id/overlay_question"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="sans-serif"
+                        android:lineSpacingExtra="5dp"
+                        android:textColor="@color/text_primary"
+                        android:textSize="34sp"
+                        android:textStyle="bold" />
+                </ScrollView>
+
+                <Button
+                    android:id="@+id/overlay_hint"
+                    android:layout_width="wrap_content"
+                    android:layout_height="44dp"
+                    android:layout_marginStart="18dp"
+                    android:background="@drawable/pill_bg"
+                    android:fontFamily="sans-serif"
+                    android:minWidth="84dp"
+                    android:minHeight="0dp"
+                    android:paddingLeft="18dp"
+                    android:paddingRight="18dp"
+                    android:text="提示"
+                    android:textAllCaps="false"
+                    android:textColor="@color/text_secondary"
+                    android:textSize="17sp" />
+            </LinearLayout>
+
+            <!-- 选项区：占满剩余高度，6 个长选项也能滚动看全 -->
+            <ScrollView
+                android:id="@+id/overlay_options_scroll"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginTop="16dp"
+                android:layout_weight="1"
+                android:clipToPadding="false"
+                android:fillViewport="true"
+                android:focusable="false"
+                android:scrollbars="vertical">
+
+                <LinearLayout
+                    android:id="@+id/overlay_options"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="vertical"
+                    android:paddingBottom="8dp" />
+            </ScrollView>
+
+            <!-- 反馈条：答对 / 答错后出现，空内容时自动隐藏 -->
+            <TextView
+                android:id="@+id/overlay_feedback"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="10dp"
+                android:fontFamily="sans-serif"
+                android:gravity="center"
+                android:paddingLeft="22dp"
+                android:paddingTop="8dp"
+                android:paddingRight="22dp"
+                android:paddingBottom="8dp"
+                android:textColor="@color/ok"
+                android:textSize="19sp"
+                android:visibility="gone" />
+        </LinearLayout>
+
+        <!-- 结果 / 答错复盘 -->
+        <LinearLayout
+            android:id="@+id/overlay_result"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/overlay_bg"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:fillViewport="true"
+                android:focusable="false"
+                android:scrollbars="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal|center_vertical"
+                    android:orientation="vertical"
+                    android:paddingTop="14dp"
+                    android:paddingBottom="12dp">
+
+                    <TextView
+                        android:id="@+id/overlay_result_title"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="sans-serif"
+                        android:gravity="center"
+                        android:textColor="@color/text_primary"
+                        android:textSize="36sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/overlay_result_detail"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        android:fontFamily="sans-serif"
+                        android:gravity="center"
+                        android:lineSpacingExtra="4dp"
+                        android:textColor="@color/text_secondary"
+                        android:textSize="21sp" />
+
+                    <!-- 复盘信息分层：你选的（红）/ 正确答案（绿）/ 提示入口 -->
+                    <LinearLayout
+                        android:id="@+id/overlay_review_cards"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="18dp"
+                        android:orientation="vertical"
+                        android:visibility="gone">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/card_danger"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal"
+                            android:paddingLeft="20dp"
+                            android:paddingTop="14dp"
+                            android:paddingRight="20dp"
+                            android:paddingBottom="14dp">
+
+                            <TextView
+                                android:layout_width="96dp"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="sans-serif"
+                                android:text="✕  你选的"
+                                android:textColor="@color/danger"
+                                android:textSize="17sp" />
+
+                            <TextView
+                                android:id="@+id/overlay_review_chosen"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:fontFamily="sans-serif"
+                                android:textColor="@color/text_primary"
+                                android:textSize="21sp" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:background="@drawable/card_ok"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal"
+                            android:paddingLeft="20dp"
+                            android:paddingTop="14dp"
+                            android:paddingRight="20dp"
+                            android:paddingBottom="14dp">
+
+                            <TextView
+                                android:layout_width="96dp"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="sans-serif"
+                                android:text="✓  正确答案"
+                                android:textColor="@color/ok"
+                                android:textSize="17sp" />
+
+                            <TextView
+                                android:id="@+id/overlay_review_correct"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:fontFamily="sans-serif"
+                                android:textColor="@color/ok"
+                                android:textSize="22sp"
+                                android:textStyle="bold" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <Button
+                        android:id="@+id/overlay_review_hint"
+                        android:layout_width="wrap_content"
+                        android:layout_height="44dp"
+                        android:layout_marginTop="16dp"
+                        android:background="@drawable/pill_bg"
+                        android:fontFamily="sans-serif"
+                        android:minHeight="0dp"
+                        android:paddingLeft="20dp"
+                        android:paddingRight="20dp"
+                        android:text="看一下提示再继续"
+                        android:textAllCaps="false"
+                        android:textColor="@color/text_secondary"
+                        android:textSize="17sp"
+                        android:visibility="gone" />
+
+                    <TextView
+                        android:id="@+id/overlay_result_review"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:fontFamily="sans-serif"
+                        android:gravity="center"
+                        android:lineSpacingExtra="4dp"
+                        android:textColor="@color/text_secondary"
+                        android:textSize="19sp" />
+                </LinearLayout>
+            </ScrollView>
+
+            <TextView
+                android:id="@+id/overlay_result_hint"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/pill_bg"
+                android:clickable="true"
+                android:focusable="true"
+                android:fontFamily="sans-serif"
+                android:paddingLeft="24dp"
+                android:paddingTop="11dp"
+                android:paddingRight="24dp"
+                android:paddingBottom="11dp"
+                android:text="按确定键继续"
+                android:textColor="@color/text_primary"
+                android:textSize="19sp" />
+        </LinearLayout>
+
+        <!-- AI 思路提示 -->
+        <LinearLayout
+            android:id="@+id/overlay_hint_panel"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/overlay_bg"
+            android:orientation="vertical"
+            android:paddingStart="20dp"
+            android:visibility="gone">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif"
+                    android:text="思路提示"
+                    android:textColor="@color/accent"
+                    android:textSize="28sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/overlay_hint_source"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_weight="1"
+                    android:fontFamily="sans-serif"
+                    android:gravity="end"
+                    android:textColor="@color/text_secondary"
+                    android:textSize="15sp" />
+            </LinearLayout>
+
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginTop="14dp"
+                android:layout_weight="1"
+                android:fillViewport="true"
+                android:focusable="true"
+                android:scrollbars="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/card_bg"
+                    android:elevation="6dp"
+                    android:orientation="vertical"
+                    android:padding="24dp">
+
+                    <TextView
+                        android:id="@+id/overlay_hint_text"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="sans-serif"
+                        android:lineSpacingExtra="6dp"
+                        android:textColor="@color/text_primary"
+                        android:textSize="26sp" />
+
+                    <TextView
+                        android:id="@+id/overlay_hint_steps"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        android:fontFamily="sans-serif"
+                        android:lineSpacingExtra="4dp"
+                        android:textColor="@color/text_secondary"
+                        android:textSize="21sp" />
+
+                    <TextView
+                        android:id="@+id/overlay_hint_concept"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:fontFamily="sans-serif"
+                        android:textColor="@color/accent"
+                        android:textSize="18sp" />
+
+                    <TextView
+                        android:id="@+id/overlay_hint_pitfall"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="6dp"
+                        android:fontFamily="sans-serif"
+                        android:lineSpacingExtra="4dp"
+                        android:textColor="@color/text_secondary"
+                        android:textSize="17sp" />
+                </LinearLayout>
+            </ScrollView>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="14dp"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/overlay_hint_speak"
+                    android:layout_width="wrap_content"
+                    android:layout_height="52dp"
+                    android:background="@drawable/pill_bg"
+                    android:fontFamily="sans-serif"
+                    android:minWidth="200dp"
+                    android:minHeight="0dp"
+                    android:paddingLeft="24dp"
+                    android:paddingRight="24dp"
+                    android:text="朗读提示"
+                    android:textAllCaps="false"
+                    android:textColor="@color/text_primary"
+                    android:textSize="19sp" />
+
+                <Button
+                    android:id="@+id/overlay_hint_stop"
+                    android:layout_width="wrap_content"
+                    android:layout_height="52dp"
+                    android:layout_marginStart="14dp"
+                    android:background="@drawable/pill_bg"
+                    android:fontFamily="sans-serif"
+                    android:minHeight="0dp"
+                    android:minWidth="160dp"
+                    android:paddingLeft="24dp"
+                    android:paddingRight="24dp"
+                    android:text="停止朗读"
+                    android:textAllCaps="false"
+                    android:textColor="@color/text_primary"
+                    android:textSize="19sp" />
+
+                <Button
+                    android:id="@+id/overlay_hint_close"
+                    android:layout_width="wrap_content"
+                    android:layout_height="52dp"
+                    android:layout_marginStart="14dp"
+                    android:background="@drawable/pill_bg"
+                    android:fontFamily="sans-serif"
+                    android:minHeight="0dp"
+                    android:minWidth="260dp"
+                    android:paddingLeft="24dp"
+                    android:paddingRight="24dp"
+                    android:text="返回答题"
+                    android:textAllCaps="false"
+                    android:textColor="@color/text_primary"
+                    android:textSize="19sp" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- 左上角返回角标：图标化、不占正文空间、遥控器可聚焦 -->
+        <Button
+            android:id="@+id/overlay_exit"
+            android:layout_width="52dp"
+            android:layout_height="52dp"
+            android:layout_gravity="top|start"
+            android:background="@drawable/badge_bg"
+            android:contentDescription="返回桌面"
+            android:fontFamily="sans-serif"
+            android:gravity="center"
+            android:minHeight="0dp"
+            android:minWidth="0dp"
+            android:paddingLeft="0dp"
+            android:paddingRight="0dp"
+            android:text="‹"
+            android:textAllCaps="false"
+            android:textColor="@color/text_primary"
+            android:textSize="30sp"
+            android:textStyle="bold" />
+    </FrameLayout>
+</com.family.quizlauncher.OverlayRootView>

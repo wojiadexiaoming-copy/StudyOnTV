@@ -1,0 +1,825 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg"
+    android:fillViewport="true"
+    android:scrollbars="none">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        android:paddingTop="16dp"
+        android:paddingBottom="28dp">
+
+        <TextView
+            style="@style/ScreenTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="家长控制台" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="同一 Wi-Fi 下连接电视端答题 App，远程更新题库、控制放行"
+            android:textColor="@color/text2"
+            android:textSize="13sp" />
+
+        <!-- ============ 连接电视 ============ -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="14dp"
+            android:background="@drawable/bg_card"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    style="@style/CardTitle"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="连接电视" />
+
+                <TextView
+                    android:id="@+id/tv_conn_badge"
+                    style="@style/Chip"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_chip_gray"
+                    android:text="未连接" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="14dp"
+                android:orientation="horizontal">
+
+                <EditText
+                    android:id="@+id/et_ip"
+                    style="@style/Field"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:hint="电视 IP，如 192.168.1.50"
+                    android:inputType="text" />
+
+                <EditText
+                    android:id="@+id/et_port"
+                    style="@style/Field"
+                    android:layout_width="88dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="8dp"
+                    android:hint="端口"
+                    android:inputType="number" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:orientation="horizontal">
+
+                <EditText
+                    android:id="@+id/et_pin"
+                    style="@style/Field"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:hint="4 位家长 PIN"
+                    android:inputType="number"
+                    android:maxLength="4" />
+
+                <Button
+                    android:id="@+id/btn_connect"
+                    style="@style/ButtonPrimary"
+                    android:layout_width="100dp"
+                    android:layout_height="50dp"
+                    android:layout_marginLeft="8dp"
+                    android:text="连接" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/btn_scan"
+                    style="@style/ButtonGhost"
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"
+                    android:layout_weight="1"
+                    android:text="扫描同网段" />
+
+                <Button
+                    android:id="@+id/btn_refresh"
+                    style="@style/ButtonGhost"
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"
+                    android:layout_marginLeft="8dp"
+                    android:layout_weight="1"
+                    android:text="刷新状态" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tv_conn_state"
+                style="@style/Label"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="未连接。请先打开电视端「手机连接」页面。" />
+
+            <Button
+                android:id="@+id/btn_retry_conn"
+                style="@style/ButtonGhost"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_marginTop="8dp"
+                android:text="重试"
+                android:visibility="gone" />
+        </LinearLayout>
+
+        <!-- ============ 页面切换 ============ -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="14dp"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btn_tab_overview"
+                style="@style/ButtonGhost"
+                android:layout_width="0dp"
+                android:layout_height="48dp"
+                android:layout_weight="1"
+                android:text="总览" />
+
+            <Button
+                android:id="@+id/btn_tab_bank"
+                style="@style/ButtonGhost"
+                android:layout_width="0dp"
+                android:layout_height="48dp"
+                android:layout_marginLeft="8dp"
+                android:layout_weight="1"
+                android:text="题库" />
+
+            <Button
+                android:id="@+id/btn_tab_stats"
+                style="@style/ButtonGhost"
+                android:layout_width="0dp"
+                android:layout_height="48dp"
+                android:layout_marginLeft="8dp"
+                android:layout_weight="1"
+                android:text="统计" />
+        </LinearLayout>
+
+        <!-- ======================================================== -->
+        <!-- 总览 -->
+        <!-- ======================================================== -->
+        <LinearLayout
+            android:id="@+id/panel_overview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="14dp"
+                android:background="@drawable/bg_card"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <TextView
+                    style="@style/CardTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="电视端状态" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/tv_chip_version"
+                        style="@style/Chip"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="@drawable/bg_chip_info"
+                        android:gravity="center"
+                        android:text="版本 —" />
+
+                    <TextView
+                        android:id="@+id/tv_chip_minutes"
+                        style="@style/Chip"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="8dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/bg_chip_gray"
+                        android:gravity="center"
+                        android:text="放行 30 分钟" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/tv_chip_pass"
+                        style="@style/Chip"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="@drawable/bg_chip_gray"
+                        android:gravity="center"
+                        android:text="及格 4 题" />
+
+                    <TextView
+                        android:id="@+id/tv_chip_restricted"
+                        style="@style/Chip"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="8dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/bg_chip_gray"
+                        android:gravity="center"
+                        android:text="受限 0 个" />
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/tv_status_main"
+                    style="@style/Body"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:text="连接后显示题库概况、学科与放行状态。" />
+
+                <TextView
+                    android:id="@+id/tv_subject_summary"
+                    style="@style/Label"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="学科：—" />
+
+                <TextView
+                    android:id="@+id/tv_passes"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:background="@drawable/bg_input"
+                    android:lineSpacingExtra="4dp"
+                    android:padding="12dp"
+                    android:text="正在放行：—"
+                    android:textColor="@color/accent"
+                    android:textSize="14sp" />
+
+                <TextView
+                    style="@style/Label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:text="最近答题记录" />
+
+                <ScrollView
+                    android:layout_width="match_parent"
+                    android:layout_height="180dp"
+                    android:layout_marginTop="6dp"
+                    android:background="@drawable/bg_input"
+                    android:padding="12dp"
+                    android:scrollbars="vertical">
+
+                    <TextView
+                        android:id="@+id/tv_records"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:lineSpacingExtra="6dp"
+                        android:text="暂无答题记录"
+                        android:textColor="@color/text"
+                        android:textSize="13sp" />
+                </ScrollView>
+            </LinearLayout>
+
+            <!-- 家长控制 -->
+            <LinearLayout
+                android:id="@+id/card_control"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="14dp"
+                android:background="@drawable/bg_card"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <TextView
+                    style="@style/CardTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="家长控制" />
+
+                <TextView
+                    android:id="@+id/tv_minutes_label"
+                    style="@style/Body"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="14dp"
+                    android:text="放行时长：30 分钟" />
+
+                <SeekBar
+                    android:id="@+id/sb_minutes"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:max="119"
+                    android:progress="29"
+                    android:progressBackgroundTint="@color/stroke"
+                    android:progressTint="@color/accent"
+                    android:thumbTint="@color/accent" />
+
+                <TextView
+                    android:id="@+id/tv_passline_label"
+                    style="@style/Body"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:text="及格线：需答对 4 题" />
+
+                <SeekBar
+                    android:id="@+id/sb_passline"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:max="4"
+                    android:progress="3"
+                    android:progressBackgroundTint="@color/stroke"
+                    android:progressTint="@color/accent"
+                    android:thumbTint="@color/accent" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="14dp"
+                    android:orientation="horizontal">
+
+                    <Button
+                        android:id="@+id/btn_apps"
+                        style="@style/ButtonGhost"
+                        android:layout_width="0dp"
+                        android:layout_height="50dp"
+                        android:layout_weight="1"
+                        android:text="管理受限应用" />
+
+                    <Button
+                        android:id="@+id/btn_target"
+                        style="@style/ButtonGhost"
+                        android:layout_width="0dp"
+                        android:layout_height="50dp"
+                        android:layout_marginLeft="8dp"
+                        android:layout_weight="1"
+                        android:text="放行对象：—" />
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/tv_apps_info"
+                    style="@style/Label"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="受限应用：—" />
+
+                <Button
+                    android:id="@+id/btn_pass30"
+                    style="@style/ButtonPrimary"
+                    android:layout_width="match_parent"
+                    android:layout_height="54dp"
+                    android:layout_marginTop="14dp"
+                    android:text="立即放行 30 分钟" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:orientation="horizontal">
+
+                    <Button
+                        android:id="@+id/btn_revoke"
+                        style="@style/ButtonGhost"
+                        android:layout_width="0dp"
+                        android:layout_height="50dp"
+                        android:layout_weight="1"
+                        android:text="撤销放行" />
+
+                    <Button
+                        android:id="@+id/btn_clear_records"
+                        style="@style/ButtonDangerGhost"
+                        android:layout_width="0dp"
+                        android:layout_height="50dp"
+                        android:layout_marginLeft="8dp"
+                        android:layout_weight="1"
+                        android:text="清空答题记录" />
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- ======================================================== -->
+        <!-- 题库 -->
+        <!-- ======================================================== -->
+        <LinearLayout
+            android:id="@+id/panel_bank"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="14dp"
+                android:background="@drawable/bg_card"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <TextView
+                    style="@style/CardTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="学科题库" />
+
+                <TextView
+                    android:id="@+id/tv_subject_hint"
+                    style="@style/Label"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp"
+                    android:text="停用的学科不会出题。单学科上传只替换该学科，其余学科保留。" />
+
+                <LinearLayout
+                    android:id="@+id/subject_list"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:orientation="vertical" />
+
+                <Button
+                    android:id="@+id/btn_upload"
+                    style="@style/ButtonPrimary"
+                    android:layout_width="match_parent"
+                    android:layout_height="54dp"
+                    android:layout_marginTop="14dp"
+                    android:text="整库上传已选 JSON" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:orientation="horizontal">
+
+                    <Button
+                        android:id="@+id/btn_pick"
+                        style="@style/ButtonGhost"
+                        android:layout_width="0dp"
+                        android:layout_height="50dp"
+                        android:layout_weight="1"
+                        android:text="整库选择 JSON" />
+
+                    <Button
+                        android:id="@+id/btn_pick_subject"
+                        style="@style/ButtonGhost"
+                        android:layout_width="0dp"
+                        android:layout_height="50dp"
+                        android:layout_marginLeft="8dp"
+                        android:layout_weight="1"
+                        android:text="单学科上传" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:orientation="horizontal">
+
+                    <Button
+                        android:id="@+id/btn_copy_template"
+                        style="@style/ButtonGhost"
+                        android:layout_width="0dp"
+                        android:layout_height="50dp"
+                        android:layout_weight="1"
+                        android:text="复制模板" />
+
+                    <Button
+                        android:id="@+id/btn_rollback"
+                        style="@style/ButtonGhost"
+                        android:layout_width="0dp"
+                        android:layout_height="50dp"
+                        android:layout_marginLeft="8dp"
+                        android:layout_weight="1"
+                        android:text="回退上一版" />
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/tv_file_info"
+                    style="@style/Label"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/bg_input"
+                    android:padding="12dp"
+                    android:text="要求：JSON、5~500 题、每题 2~6 个选项、answer 为下标或选项原文、不超过 1MB。支持 v3 多学科与 v2 旧格式。" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="14dp"
+                android:background="@drawable/bg_card"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <TextView
+                    style="@style/CardTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="粘贴 JSON 导入" />
+
+                <TextView
+                    style="@style/Label"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp"
+                    android:text="自动去掉首尾空白与 BOM，校验不通过会指出具体到第几学科第几题。" />
+
+                <EditText
+                    android:id="@+id/et_paste"
+                    style="@style/Field"
+                    android:layout_width="match_parent"
+                    android:layout_height="160dp"
+                    android:layout_marginTop="10dp"
+                    android:gravity="top|start"
+                    android:hint="把题库 JSON 粘贴到这里，可容纳几千字"
+                    android:inputType="textMultiLine|textNoSuggestions"
+                    android:maxLines="200"
+                    android:scrollbars="vertical"
+                    android:singleLine="false"
+                    android:textSize="13sp" />
+
+                <TextView
+                    android:id="@+id/tv_paste_state"
+                    style="@style/Label"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="校验结果会显示在这里。" />
+
+                <Button
+                    android:id="@+id/btn_paste_upload"
+                    style="@style/ButtonPrimary"
+                    android:layout_width="match_parent"
+                    android:layout_height="54dp"
+                    android:layout_marginTop="10dp"
+                    android:text="校验并上传" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="14dp"
+                android:background="@drawable/bg_card"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <LinearLayout
+                    android:id="@+id/row_prompt_toggle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingTop="2dp"
+                    android:paddingBottom="2dp">
+
+                    <TextView
+                        style="@style/CardTitle"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="让 AI 生成题库" />
+
+                    <TextView
+                        android:id="@+id/tv_prompt_arrow"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="展开 ▾"
+                        android:textColor="@color/accent"
+                        android:textSize="14sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/prompt_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:orientation="vertical"
+                    android:visibility="gone">
+
+                    <TextView
+                        style="@style/Label"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="把整段发给任意 AI，改「学科 / 年级 / 知识点 / 题量」，生成的 JSON 可直接粘贴到上方输入框。" />
+
+                    <EditText
+                        android:id="@+id/et_prompt"
+                        style="@style/Field"
+                        android:layout_width="match_parent"
+                        android:layout_height="230dp"
+                        android:layout_marginTop="8dp"
+                        android:gravity="top|start"
+                        android:inputType="textMultiLine|textNoSuggestions"
+                        android:maxLines="200"
+                        android:scrollbars="vertical"
+                        android:singleLine="false"
+                        android:textSize="12sp" />
+
+                    <Button
+                        android:id="@+id/btn_copy_prompt"
+                        style="@style/ButtonPrimary"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_marginTop="10dp"
+                        android:text="复制提示词" />
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- ======================================================== -->
+        <!-- 统计 -->
+        <!-- ======================================================== -->
+        <LinearLayout
+            android:id="@+id/panel_stats"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="14dp"
+                android:background="@drawable/bg_card"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <TextView
+                    style="@style/CardTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="统计设置" />
+
+                <TextView
+                    android:id="@+id/tv_threshold_label"
+                    style="@style/Body"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:text="掌握阈值：答对 3 次视为已掌握" />
+
+                <SeekBar
+                    android:id="@+id/sb_threshold"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:max="9"
+                    android:progress="2"
+                    android:progressBackgroundTint="@color/stroke"
+                    android:progressTint="@color/accent"
+                    android:thumbTint="@color/accent" />
+
+                <Switch
+                    android:id="@+id/sw_autoremove"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="自动移出已掌握的题目"
+                    android:textColor="@color/text"
+                    android:textSize="15sp" />
+
+                <TextView
+                    android:id="@+id/tv_stats_state"
+                    style="@style/Label"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="连接电视后自动加载统计。" />
+
+                <Button
+                    android:id="@+id/btn_retry_stats"
+                    style="@style/ButtonGhost"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:layout_marginTop="8dp"
+                    android:text="重试"
+                    android:visibility="gone" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:orientation="horizontal">
+
+                    <Button
+                        android:id="@+id/btn_stats_refresh"
+                        style="@style/ButtonGhost"
+                        android:layout_width="0dp"
+                        android:layout_height="50dp"
+                        android:layout_weight="1"
+                        android:text="刷新统计" />
+
+                    <Button
+                        android:id="@+id/btn_reset_stats"
+                        style="@style/ButtonDanger"
+                        android:layout_width="0dp"
+                        android:layout_height="50dp"
+                        android:layout_marginLeft="8dp"
+                        android:layout_weight="1"
+                        android:text="重置统计" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="14dp"
+                android:background="@drawable/bg_card"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <TextView
+                    style="@style/CardTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="学科汇总" />
+
+                <LinearLayout
+                    android:id="@+id/stat_subjects"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:orientation="vertical" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="14dp"
+                android:background="@drawable/bg_card"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <TextView
+                    style="@style/CardTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="逐题统计" />
+
+                <TextView
+                    style="@style/Label"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp"
+                    android:text="按学科顺序列出全部题目；被移出的题不会出现在答题中。" />
+
+                <ScrollView
+                    android:layout_width="match_parent"
+                    android:layout_height="420dp"
+                    android:layout_marginTop="10dp"
+                    android:scrollbars="vertical">
+
+                    <LinearLayout
+                        android:id="@+id/stat_questions"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical" />
+                </ScrollView>
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+</ScrollView>

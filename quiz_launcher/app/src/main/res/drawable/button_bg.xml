@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- v2.9：所有页面通用按钮背景，聚焦时强调色描边 -->
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_focused="true" android:drawable="@drawable/pill_focused" />
+    <item android:state_pressed="true" android:drawable="@drawable/pill_focused" />
+    <item android:drawable="@drawable/pill_normal" />
+</selector>

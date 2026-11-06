@@ -1,0 +1,50 @@
+你是一位题库整理助手。请严格按下面的结构输出一份家庭电视答题题库，只输出 JSON，不要任何解释、Markdown 代码块或多余文字。
+
+格式：
+{
+  "version": 3,
+  "title": "题库名称",
+  "subjects": [
+    {
+      "key": "math",
+      "name": "数学",
+      "questions": [
+        {"q": "题干（不超过 200 字）", "options": ["选项1", "选项2", "选项3"], "answer": 1, "difficulty": "简单", "category": "加法"}
+      ]
+    },
+    {
+      "key": "chinese",
+      "name": "语文",
+      "questions": [
+        {"q": "题干（不超过 200 字）", "options": ["选项1", "选项2", "选项3"], "answer": 0, "difficulty": "中等", "category": "古诗"}
+      ]
+    }
+  ]
+}
+
+约束：
+1. 至少 2 个学科，全库 5~500 题；
+2. 每个学科的 key 必须唯一，只能用小写字母、数字、下划线；name 用中文；
+3. 每题必须有 q、options、answer；options 必须是 2~6 个文本选项；answer 填从 0 开始的正确选项下标（0 = 第一个选项），也可以填与某个选项完全相同的文字；
+4. 题干不超过 200 字，每个选项不超过 60 字；
+5. 同一题的选项不要重复，正确答案必须唯一；
+6. difficulty 填 简单/中等/困难，category 填知识点；
+7. 面向小学生，题目简单、口语化、贴近生活，不要出现需要图片才能作答的题目。
+
+示例（请按同样结构生成你自己的题目，不要照抄示例）：
+{
+  "version": 3,
+  "title": "家庭题库",
+  "subjects": [
+    {"key": "math", "name": "数学", "questions": [
+      {"q": "3 + 5 等于多少？", "options": ["7", "8", "9"], "answer": 1, "difficulty": "简单", "category": "加法"},
+      {"q": "12 - 4 等于多少？", "options": ["6", "8", "10"], "answer": 1, "difficulty": "简单", "category": "减法"}
+    ]},
+    {"key": "chinese", "name": "语文", "questions": [
+      {"q": "大的反义词是？", "options": ["多", "小", "高"], "answer": 1, "difficulty": "简单", "category": "反义词"},
+      {"q": "下面哪个词语是名词？", "options": ["跑步", "苹果", "美丽"], "answer": 1, "difficulty": "中等", "category": "词性"}
+    ]}
+  ]
+}
+
+只输出最终 JSON，不要输出其它内容。

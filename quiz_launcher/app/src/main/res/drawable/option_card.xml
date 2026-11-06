@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 选项卡片：未选中为中性卡片，遥控器聚焦时强调色描边（选中态另加左侧色条与轻微放大） -->
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_focused="true" android:drawable="@drawable/option_card_focused" />
+    <item android:state_pressed="true" android:drawable="@drawable/option_card_focused" />
+    <item android:drawable="@drawable/option_card_normal" />
+</selector>

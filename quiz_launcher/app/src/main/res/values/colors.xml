@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="bg">#FF0E1218</color>
+    <color name="panel">#FF161E27</color>
+    <color name="tile">#FF1B242E</color>
+    <color name="tile_focus">#FF22303D</color>
+    <color name="tile_stroke">#FF2A3542</color>
+    <color name="accent">#FF4DA3FF</color>
+    <color name="accent_dim">#FF2E7DFF</color>
+    <color name="text_primary">#FFF2F6FA</color>
+    <color name="text_secondary">#FF9FB0C0</color>
+    <color name="danger">#FFFF6B6B</color>
+    <color name="ok">#FF58D68D</color>
+    <color name="overlay_bg">#FF0A0E13</color>
+
+    <!-- v2.9 视觉规范补充 -->
+    <color name="progress_track">#FF212C38</color>
+    <color name="ok_bg">#FF12241B</color>
+    <color name="danger_bg">#FF2A1418</color>
+    <color name="accent_soft">#FF15304A</color>
+    <color name="scrim">#99060A0F</color>
+</resources>
